@@ -1,17 +1,23 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { IPokemon } from "../../types";
 import MyPokePresenter from "./MyPokePresenter";
 
 const MyPokeContainer = () => {
   const [windowSize, setWindow] = useState(window.innerWidth);
   const [pokemons, setPokemon] = useState(
-    JSON.parse(localStorage.getItem("myPoketmon"))
+    localStorage.getItem("myPoketmon")
+      ? JSON.parse(localStorage.getItem("myPoketmon")!)
+      : null
   );
   const [battlePokemons, setBattle] = useState(
-    JSON.parse(localStorage.getItem("battlePokemons"))
+    localStorage.getItem("battlePokemons")
+      ? JSON.parse(localStorage.getItem("battlePokemons")!)
+      : null
   );
   const [changePossible, setChange] = useState(0);
   const [changeIndex, setIndex] = useState(1);
   const [message, setMessage] = useState("");
+
   useEffect(() => {
     window.addEventListener("resize", () => setWindow(window.innerWidth));
     return window.removeEventListener("resize", () =>
@@ -25,11 +31,10 @@ const MyPokeContainer = () => {
 
   const handlePokemonClick = useCallback(
     (e) => {
-      console.log(changePossible);
       if (changePossible !== 1) return;
 
       const Id = parseInt(e.currentTarget.id);
-      const Judge = battlePokemons.map((item) => item.myId); // 이미 목록에 들어가 있는 포켓몬은 선택하지 못하도록 판단
+      const Judge = battlePokemons.map((item: IPokemon) => item.myId); // 이미 목록에 들어가 있는 포켓몬은 선택하지 못하도록 판단
 
       if (!Judge.includes(Id)) {
         if (battlePokemons.length !== 3)
@@ -52,12 +57,12 @@ const MyPokeContainer = () => {
     [battlePokemons, changePossible]
   );
 
-  const changeBtnClick = (e) => {
-    if (e.target.innerHTML === "Change Off") {
-      e.target.innerHTML = "Change On";
+  const changeBtnClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if ((e.target as HTMLElement).innerHTML === "Change Off") {
+      (e.target as HTMLElement).innerHTML = "Change On";
       setChange(1);
     } else {
-      e.target.innerHTML = "Change Off";
+      (e.target as HTMLElement).innerHTML = "Change Off";
       setChange(0);
     }
   };
@@ -69,11 +74,13 @@ const MyPokeContainer = () => {
     setBattle([]);
   };
 
-  const sendBtnClick = (e) => {
+  const sendBtnClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     setChange(3);
-    let newBag = JSON.parse(localStorage.getItem("myBag"));
-    const id = parseInt(e.target.parentNode.id);
+    let newBag = JSON.parse(localStorage.getItem("myBag")!);
+    const id = parseInt(
+      ((e.target as HTMLElement).parentNode as HTMLElement).id
+    );
     let newBattlePokemon = battlePokemons;
     const pickPokemon = pokemons[id - 1];
 
@@ -87,7 +94,9 @@ const MyPokeContainer = () => {
       return 0;
     }
 
-    if (battlePokemons.filter((item) => item.myId === id).length === 0) {
+    if (
+      battlePokemons.filter((item: IPokemon) => item.myId === id).length === 0
+    ) {
       // 포켓몬을 보낼시  보상으로 사탕을 준다.(cp에 따라 다르게 준다.)
 
       if (pickPokemon.cp >= 100 && pickPokemon.cp < 1000) {
@@ -100,19 +109,19 @@ const MyPokeContainer = () => {
         newBag.Candy += 15;
         setMessage("you got  15 candy");
       }
-      newBattlePokemon = battlePokemons.map((item) => {
+      newBattlePokemon = battlePokemons.map((item: IPokemon) => {
         let newItem = item;
 
-        if (item.myId > id) newItem.myId -= 1;
+        if (item.myId! > id) newItem.myId! -= 1;
         return newItem;
       });
 
-      const newPokemon = JSON.parse(localStorage.getItem("myPoketmon"))
-        .filter((item) => item.myId !== id)
-        .map((item, index) => {
+      const newPokemon = JSON.parse(localStorage.getItem("myPoketmon")!)
+        .filter((item: IPokemon) => item.myId !== id)
+        .map((item: IPokemon, index: number) => {
           let newItem = item;
           if (index >= id - 1) {
-            newItem.myId -= 1;
+            newItem.myId! -= 1;
           }
           return newItem;
         }); // myId 인덱스 정리를 해주고 (타겟 포켓몬 뒤쪽 아이들의 아이디를 하나씩 줄여주고  타겟을 삭제)

@@ -1,5 +1,6 @@
 import pokemon from "pokesprite-images/data/pokemon.json";
 import usePokemon from "pokemon-go-pokedex";
+import { IAttackColor, IUrlSearch } from "./types";
 
 const realPokemon = usePokemon.pokemon;
 
@@ -69,7 +70,7 @@ megaXYPokemon = megaXYPokemon
   })
   .map((item: any) => item.name.eng.toLowerCase());
 
-const attackColor = {
+const attackColor: IAttackColor = {
   Normal: "#A8A878",
   Fire: "#F08030",
   Water: "#6890F0",
@@ -178,7 +179,7 @@ const DamegeCalc = (
   return attackDamege;
 };
 
-const urlSearch = {
+const urlSearch: IUrlSearch = {
   commonUrl: (smallName: string) => commonUrl + smallName + ".gif",
   commonBackUrl: (smallName: string) => commonBackUrl + smallName + ".gif",
   shinyUrl: (smallName: string) => shinyUrl + smallName + ".gif",
@@ -189,56 +190,56 @@ const urlSearch = {
           megaCommonUrl: commonUrl + smallName + "-mega.gif",
           megaShinyUrl: shinyUrl + smallName + "-mega.gif",
         }
-      : "",
+      : null,
   alolalUrl: (smallName: string) =>
     alolaPokemon.includes(smallName)
       ? {
           alolaCommonUrl: commonUrl + smallName + "-alola.gif",
           alolaShinyUrl: shinyUrl + smallName + "-alola.gif",
         }
-      : "",
+      : null,
   megaXUrl: (smallName: string) =>
     megaXYPokemon.includes(smallName)
       ? {
           megaXCommonUrl: commonUrl + smallName + "-megax.gif",
           megaXShinyUrl: shinyUrl + smallName + "-megax.gif",
         }
-      : "",
+      : null,
   megaYUrl: (smallName: string) =>
     megaXYPokemon.includes(smallName)
       ? {
           megaYCommonUrl: commonUrl + smallName + "-megay.gif",
           megaYShinyUrl: shinyUrl + smallName + "-megay.gif",
         }
-      : "",
+      : null,
   megaBackUrl: (smallName: string) =>
     megaPokemon.includes(smallName)
       ? {
           megaBackCommonUrl: commonBackUrl + smallName + "-mega.gif",
           megaBackShinyUrl: shinyBackUrl + smallName + "-mega.gif",
         }
-      : "",
+      : null,
   alolaBackUrl: (smallName: string) =>
     alolaPokemon.includes(smallName)
       ? {
           alolaBackCommonUrl: commonBackUrl + smallName + "-alola.gif",
           alolaBackShinyUrl: shinyBackUrl + smallName + "-alola.gif",
         }
-      : "",
+      : null,
   megaXBackUrl: (smallName: string) =>
     megaXYPokemon.includes(smallName)
       ? {
           megaXBackCommonUrl: commonBackUrl + smallName + "-megax.gif",
           megaXBackShinyUrl: shinyBackUrl + smallName + "-megax.gif",
         }
-      : "",
+      : null,
   megaYBackUrl: (smallName: string) =>
     megaXYPokemon.includes(smallName)
       ? {
           megaYBackCommonUrl: commonBackUrl + smallName + "-megay.gif",
           megaYBackShinyUrl: shinyBackUrl + smallName + "-megay.gif",
         }
-      : "",
+      : null,
 };
 
 const PokemonEvolve = {

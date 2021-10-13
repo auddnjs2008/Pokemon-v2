@@ -1,12 +1,12 @@
 import React from "react";
-import PropTypes, { string } from "prop-types";
 import styled from "styled-components";
 import Menu from "../../Components/Menu";
 import LongMenu from "../../Components/LongMenu";
 import MyPokemon from "../../Components/MyPokemon";
 import Message from "../../Components/Message";
+import { IMyPokePresenter } from "../../types";
 
-const Container = styled.div`
+const Container = styled.div<{ windowSize: number }>`
   display: grid;
   /* grid-auto-flow:column;
     grid-auto-columns:1fr; */
@@ -20,7 +20,7 @@ const Container = styled.div`
   padding: 20px;
 `;
 
-const Header = styled.div`
+const Header = styled.div<{ windowSize: number }>`
   //position:fixed;
   position: absolute;
   color: white;
@@ -80,7 +80,7 @@ const BtnWrapper = styled.div`
   }
 `;
 
-const MyPokePresenter = ({
+const MyPokePresenter: React.FC<IMyPokePresenter> = ({
   windowSize,
   pokemons,
   message,
@@ -101,6 +101,7 @@ const MyPokePresenter = ({
           {battlePokemons[0] && battlePokemons[0].specialUrl === undefined ? (
             <li>
               <img
+                alt={"배틀포켓몬"}
                 src={
                   battlePokemons[0]
                     ? battlePokemons[0].color === 0
@@ -114,6 +115,7 @@ const MyPokePresenter = ({
           ) : (
             <li>
               <img
+                alt={"배틀 포켓몬"}
                 src={
                   battlePokemons[0]
                     ? battlePokemons[0].color === 0
@@ -129,6 +131,7 @@ const MyPokePresenter = ({
             <li>
               {" "}
               <img
+                alt={"배틀 포켓몬"}
                 src={
                   battlePokemons[1]
                     ? battlePokemons[1].color === 0
@@ -143,6 +146,7 @@ const MyPokePresenter = ({
             <li>
               {" "}
               <img
+                alt={"배틀 포켓몬"}
                 src={
                   battlePokemons[1]
                     ? battlePokemons[1].color === 0
@@ -157,6 +161,7 @@ const MyPokePresenter = ({
           {battlePokemons[2] && battlePokemons[2].specialUrl === undefined ? (
             <li>
               <img
+                alt={"배틀 포켓몬"}
                 src={
                   battlePokemons[2]
                     ? battlePokemons[2].color === 0
@@ -170,6 +175,7 @@ const MyPokePresenter = ({
           ) : (
             <li>
               <img
+                alt={"배틀 포켓몬"}
                 src={
                   battlePokemons[2]
                     ? battlePokemons[2].color === 0
@@ -214,16 +220,3 @@ const MyPokePresenter = ({
 };
 
 export default MyPokePresenter;
-
-MyPokePresenter.propTypes = {
-  windowSize: PropTypes.number,
-  pokemons: PropTypes.array,
-  message: PropTypes.string,
-  setMessage: PropTypes.func,
-  handlePokemonClick: PropTypes.func,
-  battlePokemons: PropTypes.array,
-  changeBtn: PropTypes.func,
-  changePossible: PropTypes.number,
-  clearBtnClick: PropTypes.func,
-  sendBtnClick: PropTypes.func,
-};

@@ -1,15 +1,15 @@
-import React, { useRef } from "react";
+import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import Battle from "../../Components/Battle";
+import Battle from "../../../Components/Battle";
 import {Link} from "react-router-dom";
-import Egg from "../../Components/Egg";
-
+import Egg from "../../../Components/Egg";
 
 const TestContainer=styled.div`
-background-image:url("https://usecloud.s3-ap-northeast-1.amazonaws.com/pokmonImages/%EB%8F%99%EA%B5%B4%EB%B0%B0%EA%B2%BD.jpg");
+background-image:url("https://usecloud.s3-ap-northeast-1.amazonaws.com/pokmonImages/%EC%82%AC%EC%9B%90%EB%B0%B0%EA%B2%BD.jpg");
 background-size:cover;
-background-position:bottom center;
+background-position:center;
+
 width:100%;
 height:500px;
 `;
@@ -21,13 +21,13 @@ const MapContainer=styled.div`
     display:grid;
     grid-template-columns:repeat(11,1fr);
     grid-template-rows:repeat(10,1fr);
-    background-color:#74654F;
-    
+    background-color:#342464;
     
     &.perspective{
     transform:perspective(700px) rotateX(55deg);
     transform-style:preserve-3d; 
-    }            
+    }       
+                
 `;
 
 const Navigation =styled.div`
@@ -87,7 +87,9 @@ const Navigation =styled.div`
                 }
             animation: move2 0.5s linear forwards;
             }
+        
         }
+     
         div{
             &:nth-child(3){
                 @keyframes move3{
@@ -108,27 +110,42 @@ const Navigation =styled.div`
 `;
 
 
-
-
-const RockWrapper = styled.img`
+const PillarWrapper=styled.img`
     width:100%;
     height:100%;
+    object-fit:cover;
+    z-index:1;  
+
+
+`;
+const RoofWrapper =styled.img`
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:1;  
+  
+
+`;
+
+const FlameWrapper = styled.img`
+    width:100%;
+    height:100%;
+    object-fit:cover;
     z-index:1;  
     background-color:transparent;
 `;
 
-const RoadWrapper = styled.img`
+const RoadWrapper = styled.div`
     width:100%;
     height:100%;
-    background-color:#74654F;
-  
+    /* background-color:#5211c7; */
 
 `;
 const Trainer = styled.img`
     position:absolute;
     bottom:${props=>props.position.length !== 0 ? `${props.windowSize[1]-props.position[1]-50}px` : "0"};
     left:${props=> props.position.length !==0 ? `${props.position[0]}px` : "50%"};
-   
+
 `;
 
 const Pokemon = styled.img`
@@ -172,6 +189,7 @@ const EggWrapper = styled.div`
     animation-iteration-count:5;
 
 `;
+
 const Incense =styled.div`
     position:absolute;
     top:50%;
@@ -190,36 +208,42 @@ const Incense =styled.div`
 
 `;
 
-const RockMapPresenter =({map,trainer,bag,char,yard,charPosition,windowSize,frontMove,pokemon,randomPosition,battlePokemon,setBattle,battleon,run,pokemonsCp,setPokemons,setCp,setPkPosition,handleMapChange,handleClickItem, hatchEgg})=>{
-    
 
-    return( 
-        <>  <TestContainer>
-            <MapContainer ref={yard}>
-                {map.map(items=>items.map(item=>item === 1 ? <RockWrapper src={"https://usecloud.s3-ap-northeast-1.amazonaws.com/pokmonImages/%EB%B0%94%EC%9C%84.png"}></RockWrapper>:<RoadWrapper src={"https://usecloud.s3-ap-northeast-1.amazonaws.com/pokmonImages/%EB%B0%94%EC%9C%84%EA%B8%B8.png"}></RoadWrapper>))}
-                <Trainer     src={frontMove ? trainer[0] : trainer[1]} ref={char} position={charPosition} windowSize={windowSize}></Trainer>
-                {pokemon.map((item,index) => item ? <Pokemon className="pokemon" random={randomPosition[index]} src={`https://projectpokemon.org/images/normal-sprite/${item.name.toLowerCase()}.gif`}/> : "")}
-            </MapContainer>
+const BossMapPresenter=({map,trainer,bag,char,yard,charPosition,windowSize,frontMove,pokemon,randomPosition,battlePokemon,setBattle,battleon,run,pokemonsCp,setPokemons,setCp,setPkPosition,handleMapChange,handleClickItem,hatchEgg})=>{
+
+    return ( 
+        <>  
+            <TestContainer>
+                <MapContainer ref={yard}>
+                    {map.map(items=>items.map(item=>item === 1 ? <FlameWrapper src={"https://usecloud.s3-ap-northeast-1.amazonaws.com/pokmonImages/%EB%B3%B4%EB%9D%BC%EB%B6%88%EA%BD%83.png"}></FlameWrapper>:
+                    (item === 2 ? <PillarWrapper src={"https://usecloud.s3-ap-northeast-1.amazonaws.com/pokmonImages/%EA%B8%B0%EB%91%A5.png"}></PillarWrapper>
+                        : (
+                        item===3? <RoofWrapper src={"https://usecloud.s3-ap-northeast-1.amazonaws.com/pokmonImages/%EC%95%84%EC%B9%98.png"}></RoofWrapper>
+                        :<RoadWrapper></RoadWrapper>))))}
+                    <Trainer     src={frontMove ? trainer[0] : trainer[1]} ref={char} position={charPosition} windowSize={windowSize}></Trainer>
+                    {pokemon.map((item,index) => item ? <Pokemon className="pokemon" random={randomPosition[index]} src={`https://projectpokemon.org/images/normal-sprite/${item.name.toLowerCase()}.gif`}/> : "")}                            
+                </MapContainer>
             </TestContainer>
-            {battlePokemon.length !==0 && battleon===1?<Battle color={"#74654F"}randomPosition={randomPosition} setRun={run} pokemonsCp={pokemonsCp} setBattle={setBattle} battleon={battleon} battleIndex={battlePokemon}  pokemons={pokemon} setPokemons={setPokemons} setCp={setCp} setPkPosition={setPkPosition}></Battle> : ""}
+            {battlePokemon.length !==0 && battleon===1?<Battle color={"#342464"} randomPosition={randomPosition} setRun={run} pokemonsCp={pokemonsCp} setBattle={setBattle} battleon={battleon} battleIndex={battlePokemon}  pokemons={pokemon} setPokemons={setPokemons} setCp={setCp} setPkPosition={setPkPosition}></Battle> : ""}
             <Navigation>
                 <Link to="/navi">Home</Link>
                 <Link to="/game">Map</Link>
-                {bag.Incense !== 0 && bag.Incese !== undefined ? <Incense onClick={handleClickItem}><img src="https://usecloud.s3-ap-northeast-1.amazonaws.com/pokemonicon/188915-pokemon-go/png/incense.png"/>{bag.Incense}</Incense> :""}
-
-            </Navigation>
+                {bag.Incense !== 0 && bag.Incese !== undefined? <Incense onClick={handleClickItem}><img src="https://usecloud.s3-ap-northeast-1.amazonaws.com/pokemonicon/188915-pokemon-go/png/incense.png"/>{bag.Incense}</Incense> :""}             
+           </Navigation>
             <ThreeD onClick={handleMapChange}>
                3D 입체보기 
             </ThreeD>
-            {hatchEgg.length !==0 ? <EggWrapper>{hatchEgg.map((item)=><Egg information={item}></Egg>)}</EggWrapper>:""}
+
+            {hatchEgg.length !==0 ? <EggWrapper>{hatchEgg.map((item)=><Egg information={item}></Egg>)}</EggWrapper>:""}   
+            
         </>
     )
 }
 
-export default RockMapPresenter;
+export default BossMapPresenter;
 
 
-RockMapPresenter.propTypes={
+BossMapPresenter.propTypes={
     map:PropTypes.array,
     trainer:PropTypes.array,
     bag:PropTypes.object,
