@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, RouteProps } from "react-router";
+import { RouteComponentProps } from "react-router";
 
 export interface IHomePresenter {
   pokemon: IPokemon[] | null;
@@ -62,6 +62,30 @@ export interface IBagPresenter {
   handleSelectEgg: (e: React.MouseEvent<HTMLLIElement>) => void;
 }
 
+export interface ICommonMapPresenter {
+  map: number[][];
+  trainer: string[];
+  bag: any;
+  char: React.RefObject<HTMLImageElement>;
+  yard: React.RefObject<HTMLDivElement>;
+  charPosition: number[];
+  windowSize: number[];
+  frontMove: number;
+  pokemon: IPokemon[];
+  randomPosition: number[][];
+  battlePokemon: number[];
+  setBattle: React.Dispatch<React.SetStateAction<number>>;
+  battleon: number;
+  run: React.Dispatch<React.SetStateAction<number>>;
+  pokemonsCp: number[];
+  setPokemons: React.Dispatch<React.SetStateAction<IPokemon[]>>;
+  setCp: React.Dispatch<React.SetStateAction<number[]>>;
+  setPkPosition: React.Dispatch<React.SetStateAction<number[][]>>;
+  handleMapChange: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  handleClickItem: (e: React.MouseEvent<HTMLDivElement>) => void;
+  hatchEgg: Egg[];
+}
+
 export interface IGameHomePresenter {
   windowSize: number;
 }
@@ -77,6 +101,20 @@ export interface IGetPokemon {
 
 export interface IAttackEffect {
   type: string[][];
+}
+
+export interface IMessage {
+  message: string;
+  setMessage: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export interface IMyPokemon {
+  sendBtnClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  id: number;
+  border: boolean;
+  changePossible: number;
+  item: IPokemon;
+  handlePokemonClick: (e: React.MouseEvent<HTMLAnchorElement>) => void;
 }
 
 export interface IBattle {
@@ -101,8 +139,8 @@ export interface IEggContainer {
   information: Egg;
 }
 
-export interface ILongMenu {
-  location: RouteProps["location"];
+export interface ILongMenu extends RouteComponentProps {
+  // location: RouteProps["location"];
 }
 
 export interface IPokemon {
@@ -159,6 +197,91 @@ export interface IAttackColor {
   Rock: string;
   Ghost: string;
   Dragon: string;
+}
+
+export interface IMapImages {
+  [index: string]: string | {};
+  Pillar: string;
+  Roof: string;
+  Navigation: string;
+  Trainer: string;
+  TrainerBack: string;
+  YardMap: {
+    Background: string;
+    Tree: string;
+  };
+  WaterMap: {
+    Background: string;
+    Water: string;
+    Wave: string;
+    Ship: string;
+  };
+  SkyMap: {
+    Background: string;
+    Cloud1: string;
+    Cloud2: string;
+  };
+  RockMap: {
+    Background: string;
+    Rock1: string;
+    Rock2: string;
+  };
+  ForestMap: {
+    Background: string;
+    Tree1: string;
+  };
+  IceMap: {
+    Background: string;
+    Ice1: string;
+  };
+  FireMap: {
+    Background: string;
+    Fire1: string;
+  };
+  ElectricMap: {
+    Background: string;
+    Electric1: string;
+  };
+  BossMap: {
+    Background: string;
+    Black1: string;
+  };
+}
+
+export interface IMapColors {
+  [key: string]: { Background: string; Road: string };
+  YardMap: {
+    Background: string;
+    Road: string;
+  };
+  WaterMap: {
+    Background: string;
+    Wave: string;
+  };
+  SkyMap: {
+    Background: string;
+    Road: string;
+  };
+  RockMap: {
+    Background: string;
+    Road: string;
+  };
+  ForestMap: {
+    Background: string;
+    Road: string;
+  };
+  IceMap: {
+    Background: string;
+  };
+  FireMap: {
+    Background: string;
+  };
+  ElectricMap: {
+    Background: string;
+  };
+  BossMap: {
+    Background: string;
+  };
 }
 
 ///////////// --

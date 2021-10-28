@@ -30,7 +30,7 @@ const MyPokeContainer = () => {
   }, [battlePokemons]);
 
   const handlePokemonClick = useCallback(
-    (e) => {
+    (e: React.MouseEvent<HTMLButtonElement>) => {
       if (changePossible !== 1) return;
 
       const Id = parseInt(e.currentTarget.id);

@@ -21,6 +21,7 @@ import BossMap from "../Routes/Map/BossMap";
 import IceMap from "../Routes/Map/IceMap";
 import ElectricMap from "../Routes/Map/ElectricMap";
 import FireMap from "../Routes/Map/FireMap";
+import CommonMap from "../Routes/Map/CommonMap";
 import Doc from "../Routes/Doc";
 
 export default () => {
@@ -34,7 +35,7 @@ export default () => {
       <Route path="/bag" component={MyBag} />
       <Route path="/game" exact component={Game} />
       <Route path="/doc" component={Doc} />
-      <Route path="/game/yardmap" component={YardMap} />
+      <Route path="/game:id" component={CommonMap} />
       <Route path="/game/rockmap" component={RockMap} />
       <Route path="/game/watermap" component={WaterMap} />
       <Route path="/game/skymap" component={SkyMap} />

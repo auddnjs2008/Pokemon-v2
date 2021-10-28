@@ -141,7 +141,7 @@ const DetailPresenter: React.FC<IDetailPresenter> = ({
   commonLength,
   windowSize,
 }) => {
-  const smallName = pokemon.name.toLowerCase();
+  const smallName = pokemon.name!.toLowerCase();
   const { urlSearch } = Evolve; // url(smallName).commonUrl 이런식으로 쓸수있다.
 
   // 진화과정을 한 배열에 담아야 한다.
@@ -279,7 +279,7 @@ const DetailPresenter: React.FC<IDetailPresenter> = ({
           <li>
             <span className="liTitle">Type</span>{" "}
             <span>
-              {pokemon.type.map((item) => (
+              {pokemon.type!.map((item) => (
                 <span>{item}</span>
               ))}
             </span>
@@ -309,15 +309,14 @@ const DetailPresenter: React.FC<IDetailPresenter> = ({
                 ? pokemon.multipliers
                 : pokemon.multipliers === null
                 ? ""
-                : pokemon.multipliers.map((item) => <span>{item}</span>)}
+                : pokemon.multipliers!.map((item) => <span>{item}</span>)}
             </span>
           </li>
           <li>
             <span className="liTitle">Weakenss</span>{" "}
             <span>
-              {pokemon.weakness!.map((item) => (
-                <span>{item}</span>
-              ))}
+              {pokemon.weakness &&
+                pokemon.weakness!.map((item) => <span>{item}</span>)}
             </span>
           </li>
         </InfoBox>

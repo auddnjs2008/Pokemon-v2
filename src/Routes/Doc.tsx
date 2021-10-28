@@ -250,7 +250,7 @@ const Doc = () => {
 
   useEffect(() => {
     window.scrollTo(window.innerWidth, 0);
-    setWindowPosition(window.innerWidth, 0);
+    setWindowPosition(window.innerWidth);
   }, []);
 
   useEffect(() => {

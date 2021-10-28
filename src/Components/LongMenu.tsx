@@ -31,12 +31,12 @@ const MLink = styled(Link)<{ isColor: boolean }>`
   }
 `;
 
-const LongMenu: React.FC<ILongMenu> = (props) => {
+const LongMenu: React.FC<ILongMenu> = ({ location }) => {
   return (
     <Container>
       <MLink
         to="/navi"
-        isColor={props.location.pathname.includes("/navi") ? true : false}
+        isColor={location!.pathname.includes("/navi") ? true : false}
       >
         Encyclopedia
         <img
@@ -46,7 +46,7 @@ const LongMenu: React.FC<ILongMenu> = (props) => {
       </MLink>
       <MLink
         to="/store"
-        isColor={props.location.pathname === "/store" ? true : false}
+        isColor={location!.pathname === "/store" ? true : false}
       >
         Store{" "}
         <img
@@ -54,20 +54,14 @@ const LongMenu: React.FC<ILongMenu> = (props) => {
           src="https://usecloud.s3-ap-northeast-1.amazonaws.com/pokemonicon/188915-pokemon-go/png/pokebag.png"
         />
       </MLink>
-      <MLink
-        to="/mine"
-        isColor={props.location.pathname === "/mine" ? true : false}
-      >
+      <MLink to="/mine" isColor={location!.pathname === "/mine" ? true : false}>
         My Pokemons
         <img
           alt="menu"
           src="https://usecloud.s3-ap-northeast-1.amazonaws.com/pokemonicon/188915-pokemon-go/png/pikachu-2.png"
         ></img>
       </MLink>
-      <MLink
-        to="/bag"
-        isColor={props.location.pathname === "/bag" ? true : false}
-      >
+      <MLink to="/bag" isColor={location!.pathname === "/bag" ? true : false}>
         My Bag
         <img
           alt="menu"
@@ -76,7 +70,7 @@ const LongMenu: React.FC<ILongMenu> = (props) => {
       </MLink>
       <MLink
         to="/game"
-        isColor={props.location.pathname.includes("/game") ? true : false}
+        isColor={location!.pathname.includes("/game") ? true : false}
       >
         Game{" "}
         <img
@@ -86,7 +80,7 @@ const LongMenu: React.FC<ILongMenu> = (props) => {
       </MLink>
       <MLink
         to="/doc"
-        isColor={props.location.pathname.includes("/doc") ? true : false}
+        isColor={location!.pathname.includes("/doc") ? true : false}
       >
         Docs{" "}
         <img

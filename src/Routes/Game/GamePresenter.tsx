@@ -94,7 +94,7 @@ const GamePresenter: React.FC<IGameHomePresenter> = ({ windowSize }) => {
     <>
       {windowSize > 810 ? <LongMenu></LongMenu> : <Menu></Menu>}
       <Container windowSize={windowSize}>
-        <Pointer to="/game/yardmap"></Pointer>
+        <Pointer to="/game:YardMap"></Pointer>
         <Pointer to="/game/rockmap"></Pointer>
         <Pointer to="/game/bossmap"></Pointer>
         <Pointer to="/game/watermap"></Pointer>

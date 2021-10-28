@@ -199,7 +199,7 @@ const MyPokePresenter: React.FC<IMyPokePresenter> = ({
             <MyPokemon
               key={item.myId}
               sendBtnClick={sendBtnClick}
-              id={item.myId}
+              id={item.myId!}
               border={
                 battlePokemons.length !== 0
                   ? battlePokemons.map((item) => item.myId).includes(index + 1)

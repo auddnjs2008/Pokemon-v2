@@ -102,7 +102,7 @@ const BagContainer = () => {
       /// 진화를 처리해주어야 한다.
       const Beforeevolve = parseInt(myPokemons[id - 1].next_evolution![0].num);
       let evolvePokmon: IPokemon = PokeDex.pokemon[Beforeevolve - 1];
-      const name = evolvePokmon.name.toLowerCase();
+      const name = evolvePokmon.name!.toLowerCase();
       let multipliers: number =
         myPokemons[id - 1].multipliers &&
         typeof myPokemons[id - 1].multipliers === "number"
@@ -146,7 +146,7 @@ const BagContainer = () => {
       EvolveDisplayNone();
     } else if (item === "MegaCandy" && newBag.MegaCandy > 0) {
       //메가 진화인지  메가xy진화인지 구분 필요
-      const smallName = myPokemons[id - 1].name.toLowerCase();
+      const smallName = myPokemons[id - 1].name!.toLowerCase();
       if (megaPokemon.includes(smallName)) {
         const megaUrl = urlSearch.megaUrl(smallName);
         const megaBackUrl = urlSearch.megaBackUrl(smallName);
@@ -196,7 +196,7 @@ const BagContainer = () => {
       //진화 화면을  지워준다.
       EvolveDisplayNone();
     } else if (item === "AlolaCandy" && newBag.AlolaCandy > 0) {
-      const smallName = myPokemons[id - 1].name.toLowerCase();
+      const smallName = myPokemons[id - 1].name!.toLowerCase();
       const alolaUrl = urlSearch.alolalUrl(smallName);
       const alolaBackUrl = urlSearch.alolaBackUrl(smallName);
       myPokemons[id - 1].cp = Math.floor(myPokemons[id - 1].cp! * 1.5);
@@ -302,8 +302,8 @@ const BagContainer = () => {
         myPokemons.filter(
           (item: IPokemon) =>
             item.specialUrl === undefined &&
-            (megaPokemon.includes(item.name.toLowerCase()) ||
-              megaXYPokemon.includes(item.name.toLowerCase()))
+            (megaPokemon.includes(item.name!.toLowerCase()) ||
+              megaXYPokemon.includes(item.name!.toLowerCase()))
         )
       );
     } else if (Id === "AlolaCandy") {
@@ -312,7 +312,7 @@ const BagContainer = () => {
         myPokemons.filter(
           (item: IPokemon) =>
             item.specialUrl === undefined &&
-            alolaPokemon.includes(item.name.toLowerCase())
+            alolaPokemon.includes(item.name!.toLowerCase())
         )
       );
     } else if (Id === "ColorChanger") {
