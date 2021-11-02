@@ -7,7 +7,7 @@ const MapColors: IMapColors = {
   },
   WaterMap: {
     Background: "#0089d0",
-    Wave: "#1e91cc",
+    Road: "#1e91cc",
   },
   SkyMap: {
     Background: "#fcf0e3",

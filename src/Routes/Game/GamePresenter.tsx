@@ -25,26 +25,27 @@ const Pointer = styled(Link)`
   position: absolute;
   background-color: rgba(231, 76, 60, 0.5);
   &:nth-child(1) {
-    bottom: 200px;
+    bottom: 150px;
     left: 50%;
   }
 
   &:nth-child(2) {
     left: 50%;
-    top: 200px;
+    top: 140px;
     transform: translateX(170px);
   }
 
   &:nth-child(3) {
     left: 50%;
-    top: 155px;
+    top: 90px;
     transform: translateX(-80px);
     border: 5px solid #34495e;
     background-color: rgba(0, 0, 0, 0.6);
   }
+
   &:nth-child(4) {
     left: 50%;
-    top: 380px;
+    top: 300px;
   }
   &:nth-child(5) {
     left: 50%;
@@ -57,13 +58,13 @@ const Pointer = styled(Link)`
   }
   &:nth-child(7) {
     left: 53%;
-    top: 15%;
+    top: 8%;
     border: 5px solid #7ed6df;
     background-color: rgba(223, 249, 251, 0.6);
   }
   &:nth-child(8) {
-    left: 60%;
-    top: 20%;
+    left: 62%;
+    top: 12%;
     border: 5px solid yellow;
     background-color: rgb(249, 202, 36, 0.7);
   }
@@ -95,14 +96,14 @@ const GamePresenter: React.FC<IGameHomePresenter> = ({ windowSize }) => {
       {windowSize > 810 ? <LongMenu></LongMenu> : <Menu></Menu>}
       <Container windowSize={windowSize}>
         <Pointer to="/game:YardMap"></Pointer>
-        <Pointer to="/game/rockmap"></Pointer>
-        <Pointer to="/game/bossmap"></Pointer>
-        <Pointer to="/game/watermap"></Pointer>
-        <Pointer to="/game/skymap"></Pointer>
-        <Pointer to="/game/forestmap"></Pointer>
-        <Pointer to="/game/icemap"></Pointer>
-        <Pointer to="/game/electricmap"></Pointer>
-        <Pointer to="/game/firemap"></Pointer>
+        <Pointer to="/game:RockMap"></Pointer>
+        <Pointer to="/game:BossMap"></Pointer>
+        <Pointer to="/game:WaterMap"></Pointer>
+        <Pointer to="/game:SkyMap"></Pointer>
+        <Pointer to="/game:ForestMap"></Pointer>
+        <Pointer to="/game:IceMap"></Pointer>
+        <Pointer to="/game:ElectricMap"></Pointer>
+        <Pointer to="/game:FireMap"></Pointer>
       </Container>
     </>
   );

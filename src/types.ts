@@ -200,7 +200,7 @@ export interface IAttackColor {
 }
 
 export interface IMapImages {
-  [index: string]: string | {};
+  [index: string]: string | { [index: string]: string };
   Pillar: string;
   Roof: string;
   Navigation: string;
@@ -208,55 +208,66 @@ export interface IMapImages {
   TrainerBack: string;
   YardMap: {
     Background: string;
-    Tree: string;
+    YardMap1: string;
   };
   WaterMap: {
     Background: string;
-    Water: string;
-    Wave: string;
+    WaterMap1: string;
+    WaterMap2: string;
     Ship: string;
   };
   SkyMap: {
     Background: string;
-    Cloud1: string;
-    Cloud2: string;
+    SkyMap1: string;
+    SkyMap2: string;
   };
   RockMap: {
     Background: string;
-    Rock1: string;
-    Rock2: string;
+    RockMap1: string;
+    RockMap2: string;
   };
   ForestMap: {
     Background: string;
-    Tree1: string;
+    ForestMap1: string;
   };
   IceMap: {
     Background: string;
-    Ice1: string;
+    IceMap1: string;
   };
   FireMap: {
     Background: string;
-    Fire1: string;
+    FireMap1: string;
   };
   ElectricMap: {
     Background: string;
-    Electric1: string;
+    ElectricMap1: string;
   };
   BossMap: {
     Background: string;
-    Black1: string;
+    BossMap1: string;
   };
 }
 
+interface CommonMap {
+  [key: string]: string;
+  Background: string;
+  Road: string;
+}
+
+interface BossMap {
+  [key: string]: string;
+  Background: string;
+}
+
 export interface IMapColors {
-  [key: string]: { Background: string; Road: string };
+  [key: string]: CommonMap | BossMap;
   YardMap: {
     Background: string;
     Road: string;
   };
   WaterMap: {
     Background: string;
-    Wave: string;
+    Road: string;
   };
   SkyMap: {
     Background: string;
@@ -282,6 +293,19 @@ export interface IMapColors {
   BossMap: {
     Background: string;
   };
+}
+
+export interface IMonsterType {
+  [key: string]: string[];
+  YardMap: string[];
+  WaterMap: string[];
+  RockMap: string[];
+  SkyMap: string[];
+  ForestMap: string[];
+  FireMap: string[];
+  IceMap: string[];
+  ElectricMap: string[];
+  BossMap: string[];
 }
 
 ///////////// --

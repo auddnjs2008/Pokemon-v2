@@ -1,34 +1,35 @@
 import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router";
 import styled from "styled-components";
 import Battle from "../../../Components/Battle";
 import { Link } from "react-router-dom";
 import Egg from "../../../Components/Egg";
 import { ICommonMapPresenter } from "../../../types";
-import imageUrls, { MapImage } from "../../../lib/imagesUrl";
+import { MapImage } from "../../../lib/imagesUrl";
 import MapColors from "../../../lib/color";
 
-const TestContainer = styled.div`
-  background-image: url("https://usecloud.s3-ap-northeast-1.amazonaws.com/pokmonImages/%EB%93%A4%ED%8C%90%EB%B0%B0%EA%B2%BD.jpg");
+const TestContainer = styled.div<{ imgKey: string }>`
+  background-image: ${(props) => `url(${props.imgKey})`};
   background-size: cover;
   background-position: bottom center;
   width: 100%;
   /* height: 550px; */
 `;
 
-const MapContainer = styled.div`
+const MapContainer = styled.div<{ backColor: string }>`
   position: relative;
   width: 100vw;
   height: 100vh;
   display: grid;
   grid-template-columns: repeat(11, 1fr);
-  grid-template-rows: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 20%);
 
-  background-color: #9a752d;
+  background-color: ${(props) => props.backColor};
 
   &.perspective {
     transform: perspective(600px) rotateX(73deg) translateY(38px);
     transform-style: preserve-3d;
-    img {
+    img:not(.road) {
       transform: rotateX(-50deg) translate3d(0, -50px, 0);
     }
   }
@@ -112,10 +113,10 @@ const TreeWrapper = styled.img`
   background-color: transparent;
 `;
 
-const RoadWrapper = styled.div`
+const RoadWrapper = styled.img<{ roadColor: string }>`
   width: 100%;
   height: 100%;
-  background-color: #e58e26;
+  background-color: ${(props) => props.roadColor};
 `;
 const Trainer = styled.img<{ position: number[]; windowSize: number[] }>`
   position: absolute;
@@ -204,30 +205,65 @@ const CommonMapPresenter: React.FC<ICommonMapPresenter> = ({
   handleClickItem,
   hatchEgg,
 }) => {
-  const [color, setColor] = useState("");
-  const [imgUrls, setImages] = useState([]);
+  const [color, setColor] = useState<{ Background: string; Road?: string }>({
+    Background: "",
+    Road: "",
+  });
+  const [imgKey, setImageKey] = useState<string>("");
+  const location = useLocation();
 
   useEffect(() => {
-    const mapKind = window.location.href.split(":")[3];
-    setColor(MapColors[mapKind].Background);
+    const keyword = location.pathname.split(":")[1];
+    setImageKey(keyword);
+  }, []);
+
+  useEffect(() => {
+    const mapKind = location.pathname.split(":")[1];
+    setColor(MapColors[mapKind]);
   }, []);
   return (
     <>
-      <TestContainer>
-        <MapContainer ref={yard}>
-          {map.map((items) =>
-            items.map((item) =>
-              item === 1 ? (
-                <TreeWrapper
-                  src={
-                    "https://usecloud.s3-ap-northeast-1.amazonaws.com/pokmonImages/%EB%82%98%EB%AC%B4.png"
-                  }
-                ></TreeWrapper>
-              ) : (
-                <RoadWrapper></RoadWrapper>
+      <TestContainer
+        imgKey={
+          imgKey
+            ? `${
+                (MapImage[imgKey] as { [index: string]: string })["Background"]
+              }`
+            : ""
+        }
+      >
+        <MapContainer ref={yard} backColor={color["Background"]}>
+          {imgKey &&
+            map.map((items) =>
+              items.map((item) =>
+                item === 1 ? (
+                  <TreeWrapper
+                    src={`${
+                      (MapImage[imgKey] as { [index: string]: string })[
+                        `${imgKey + "1"}`
+                      ]
+                    }`}
+                  ></TreeWrapper>
+                ) : (MapImage[imgKey] as { [index: string]: string })[
+                    `${imgKey + "2"}`
+                  ] ? (
+                  <RoadWrapper
+                    className="road"
+                    roadColor={color["Road"]!}
+                    src={`${
+                      (MapImage[imgKey] as { [index: string]: string })[
+                        `${imgKey + "2"}`
+                      ]
+                    }`}
+                  ></RoadWrapper>
+                ) : (
+                  <RoadWrapper
+                    className="road"
+                    roadColor={color["Road"]!}
+                  ></RoadWrapper>
+                )
               )
-            )
-          )}
+            )}
           <Trainer
             src={frontMove ? trainer[0] : trainer[1]}
             ref={char}

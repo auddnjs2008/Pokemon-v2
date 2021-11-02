@@ -3,6 +3,7 @@ import CommonMapPresenter from "./CommonMapPresenter";
 import Pokemon from "pokemon-go-pokedex";
 import { Egg, IPokemon } from "../../../types";
 import { MapImage } from "../../../lib/imagesUrl";
+import monsterTypes from "../../../lib/MonsterType";
 
 const CommonMapContainer = () => {
   const newMap = [
@@ -11,11 +12,6 @@ const CommonMapContainer = () => {
     [1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1],
     [1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1],
     [1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1],
-    // [1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1],
-    // [1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1],
-    // [1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1],
-    // [1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1],
-    // [1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1],
   ];
   const [map, setMap] = useState(newMap);
   const [charPosition, setPosition] = useState<number[]>([]); //트레이너 포지션
@@ -24,13 +20,7 @@ const CommonMapContainer = () => {
   const [battleon, setBattle] = useState(0); // battle 상태 표시 0 이면 배틀이 아니고 1이면 배틀 상태이다.
   const [run, setRun] = useState(0); // 도망가고 나오면 1로 상태를 만든다.
   // 랜덤 포켓몬은  3단계 최종진화 포켓몬은 나오지 못하게 한다.
-  const [pokemon, setPokemon] = useState(
-    Pokemon.pokemon.filter(
-      (item) =>
-        item.type.includes("Grass") &&
-        (item.prev_evolution ? item.prev_evolution.length !== 2 : 1)
-    )
-  );
+  const [pokemon, setPokemon] = useState<IPokemon[]>([]);
   const [wildPokemon, setwildPokemon] = useState<IPokemon[]>([]); // 야생포켓몬들 저장 (랜덤으로 나오는 포켓몬들)
   //랜덤 포켓몬의 좌표들
   const [pokePosition, setPkPosition] = useState<number[][]>([]);
@@ -190,12 +180,13 @@ const CommonMapContainer = () => {
     randomPosition: number[][],
     randomCp: number[]
   ) => {
+    if (!pokemon.length) return;
     for (let i = 0; i < 6; i++) {
       let who = pokemon[getRandom(pokemon.length + 1, 1) - 1];
       if (who.name === "Farfetch'd") who["name"] = "farfetchd";
-      else if (who.name.includes("Mr.")) who["name"] = "mr.mime";
-      else if (who.name.includes("Female")) who["name"] = "nidoran_f";
-      else if (who.name.includes("Male")) who["name"] = "nidoran_m";
+      else if (who.name!.includes("Mr.")) who["name"] = "mr.mime";
+      else if (who.name!.includes("Female")) who["name"] = "nidoran_f";
+      else if (who.name!.includes("Male")) who["name"] = "nidoran_m";
 
       randomPokemon.push(who);
       if (yard.current)
@@ -204,6 +195,42 @@ const CommonMapContainer = () => {
           getRandom(yard.current.clientHeight - 100, 1),
         ]);
       randomCp.push(getRandom(900, 100));
+    }
+  };
+
+  const isBossMap = (
+    mapKey: string,
+    randomPokemon: IPokemon[],
+    randomPosition: number[][],
+    randomCp: number[]
+  ) => {
+    switch (mapKey) {
+      case "FireMap":
+        if (randomPokemon.includes(Pokemon.pokemon[145])) return;
+        randomPokemon.push(Pokemon.pokemon[145]);
+        randomPosition.push([169, 15]);
+        randomCp.push(10000);
+        break;
+      case "IceMap":
+        if (randomPokemon.includes(Pokemon.pokemon[143])) return;
+        randomPokemon.push(Pokemon.pokemon[143]);
+        randomPosition.push([630, 15]);
+        randomCp.push(10000);
+        break;
+      case "ElectricMap":
+        if (randomPokemon.includes(Pokemon.pokemon[144])) return;
+        randomPokemon.push(Pokemon.pokemon[144]);
+        randomPosition.push([169, 15]);
+        randomCp.push(10000);
+        break;
+      case "BossMap":
+        if (randomPokemon.includes(Pokemon.pokemon[149])) return;
+        randomPokemon.push(Pokemon.pokemon[149]);
+        randomPosition.push([169, 15]);
+        randomCp.push(10000);
+        break;
+      default:
+        return;
     }
   };
 
@@ -241,10 +268,32 @@ const CommonMapContainer = () => {
       let randomPosition: number[][] = [];
       let randomCp: number[] = [];
       randomPokemonSetting(randomPokemon, randomPosition, randomCp);
+
+      //보스 몹은 보스 포켓몬을 넣어준다.
+      const mapKey = window.location.href.split(":")[3];
+      if (pokemon.length)
+        isBossMap(mapKey, randomPokemon, randomPosition, randomCp);
+
       setwildPokemon([...wildPokemon, ...randomPokemon]);
       setPkPosition(randomPosition);
       setCp(randomCp);
     }
+  }, [pokemon]);
+
+  useEffect(() => {
+    const mapKey = window.location.href.split(":")[3];
+    const pokemon = Pokemon.pokemon.filter((item) => {
+      for (let i = 0; i < monsterTypes[mapKey].length; i++) {
+        if (
+          item.type.includes(monsterTypes[mapKey][i]) &&
+          (item.prev_evolution ? item.prev_evolution.length !== 2 : 1)
+        ) {
+          return true;
+        }
+      }
+      return false;
+    });
+    setPokemon(pokemon);
   }, []);
 
   useEffect(() => {
