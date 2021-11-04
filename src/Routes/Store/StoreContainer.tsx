@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import StorePresenter from "./StorePresenter";
 import Evolve from "../../Evolve";
 import pokemons from "pokemon-go-pokedex";
@@ -18,6 +18,8 @@ const StoreContainer = () => {
   const [myPokemons, setMyPokemon] = useState(
     JSON.parse(localStorage.getItem("myPoketmon")!)
   );
+
+  const infoBox = useRef<HTMLDivElement>(null);
 
   const { megaPokemon, urlSearch } = Evolve;
 
@@ -150,18 +152,27 @@ const StoreContainer = () => {
     setImg(img);
     setMoney(money);
     setScroll(window.scrollY);
-    const priceWindow = document.querySelector(".InfoWrapper");
-    (priceWindow as HTMLElement).style.display = "grid";
+    if (infoBox) {
+      const priceWindow = infoBox.current;
+      (priceWindow as HTMLElement).style.display = "grid";
+    }
   };
 
   const handleClose = () => {
-    const priceWindow = document.querySelector(".InfoWrapper");
-    (priceWindow as HTMLElement).style.display = "none";
+    if (infoBox) {
+      const priceWindow = infoBox.current;
+      (priceWindow as HTMLElement).style.display = "none";
+    }
   };
 
-  const handleWindow = () => setWindow(window.innerWidth);
+  const handleWindow = () => {
+    setWindow(window.innerWidth);
+  };
 
-  const handleScroll = () => setScroll(window.scrollY);
+  const handleScroll = () => {
+    if (infoBox.current && infoBox.current.style.display)
+      setScroll(window.scrollY);
+  };
 
   useEffect(() => {
     window.addEventListener("resize", handleWindow);
@@ -184,6 +195,7 @@ const StoreContainer = () => {
       handleBuyBtn={handleBuyBtn}
       name={name}
       info={info}
+      infoBox={infoBox}
       img={img}
       money={money}
       scroll={scroll}

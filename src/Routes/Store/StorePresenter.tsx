@@ -142,6 +142,7 @@ const StorePresenter: React.FC<IStorePresenter> = ({
   handleBuyBtn,
   name,
   info,
+  infoBox,
   img,
   money,
   scroll,
@@ -598,7 +599,7 @@ const StorePresenter: React.FC<IStorePresenter> = ({
         <Title>Valor-Badge</Title>
       </ImgWrapper>
     </Container>
-    <InfoWrapper className="InfoWrapper" scroll={scroll}>
+    <InfoWrapper ref={infoBox} scroll={scroll}>
       <InfoProfile>
         <img src={img} />
         <div>{name}</div>

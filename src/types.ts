@@ -26,6 +26,7 @@ export interface IStorePresenter {
   handleBuyBtn: () => void;
   name: string;
   info: string;
+  infoBox: React.RefObject<HTMLDivElement>;
   img: string;
   money: number;
   scroll: number;

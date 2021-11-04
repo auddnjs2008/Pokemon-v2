@@ -176,7 +176,7 @@ const BagContainer = () => {
 
       //배틀 포켓몬이 지정되 있으면  바꾸어 주어야 한다.
 
-      BattlePokemonSetting(myPokemons, myPokemons[id - 1], id);
+      // BattlePokemonSetting(myPokemons, myPokemons[id - 1], id);
 
       // setEvolve에  진화전 진화후 url 저징
       if (myPokemons[id - 1].color === 0) {
@@ -209,7 +209,7 @@ const BagContainer = () => {
       };
 
       //배틀 포켓몬이 지정되 있으면  바꾸어 주어야 한다.
-      BattlePokemonSetting(myPokemons, myPokemons[id - 1], id);
+      // BattlePokemonSetting(myPokemons, myPokemons[id - 1], id);
 
       // setEvolve에  진화전 진화후 url 저징
       if (myPokemons[id - 1].color === 0) {
@@ -258,13 +258,13 @@ const BagContainer = () => {
       }
       //배틀 포켓몬이 지정되 있으면  바꾸어 주어야 한다.
 
-      BattlePokemonSetting(myPokemons, myPokemons[id - 1], id);
-
+      // BattlePokemonSetting(myPokemons, myPokemons[id - 1], id);
       EvolveDisplayNone();
     }
 
     if (myPokemons[id - 1].health! > 100) myPokemons[id - 1].health = 100;
 
+    BattlePokemonSetting(myPokemons, myPokemons[id - 1], id);
     setLocal(myPokemons);
     setBag(newBag);
   };

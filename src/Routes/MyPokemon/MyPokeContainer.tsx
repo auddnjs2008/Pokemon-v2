@@ -20,9 +20,8 @@ const MyPokeContainer = () => {
 
   useEffect(() => {
     window.addEventListener("resize", () => setWindow(window.innerWidth));
-    return window.removeEventListener("resize", () =>
-      setWindow(window.innerWidth)
-    );
+    return () =>
+      window.removeEventListener("resize", () => setWindow(window.innerWidth));
   }, []);
 
   useEffect(() => {
@@ -54,7 +53,7 @@ const MyPokeContainer = () => {
         }
       }
     },
-    [battlePokemons, changePossible]
+    [battlePokemons, changePossible, changeIndex, pokemons]
   );
 
   const changeBtnClick = (e: React.MouseEvent<HTMLButtonElement>) => {

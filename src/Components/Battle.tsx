@@ -285,7 +285,9 @@ const Battle: React.FC<IBattle> = ({
         ]
   );
 
-  const [myPhysical, setMyPhysical] = useState(0);
+  const [myPhysical, setMyPhysical] = useState(
+    JSON.parse(localStorage.battlePokemons)[0].health
+  );
   const [initList, setInit] = useState<NodeListOf<HTMLLIElement>>();
   const [list, setList] = useState<NodeListOf<HTMLLIElement>>();
   const [listIndex, setIndex] = useState(0);
@@ -597,18 +599,19 @@ const Battle: React.FC<IBattle> = ({
         )[0];
       }
 
-      if (newBattlePokemon.specialUrl === undefined)
+      if (newBattlePokemon.specialUrl === undefined) {
         if (myMonster.current)
           myMonster.current.src = item.innerHTML.includes(shinyUrl)
             ? newBattlePokemon.shinyBackUrl
             : newBattlePokemon.commonBackUrl;
-        else if (myMonster.current)
+      } else {
+        if (myMonster.current)
           (myMonster.current as HTMLImageElement).src = item.innerHTML.includes(
             shinyUrl
           )
             ? newBattlePokemon.specialShinyBackUrl
             : newBattlePokemon.specialBackUrl;
-
+      }
       if (myMonster.current && menu.current) {
         myMonster.current.id = (item.firstChild! as HTMLElement).id;
         menu.current.innerHTML = "";
@@ -750,8 +753,9 @@ const Battle: React.FC<IBattle> = ({
   //배틀이 끝난 지점 처리
   useEffect(() => {
     // 저장소에 저장
-    if (myMonster.current)
+    if (myMonster.current) {
       myPokemons[Number(myMonster.current.id) - 1].health = myPhysical;
+    }
     localStorage.setItem("battlePokemons", JSON.stringify(myBattlePokemons));
     localStorage.setItem("myPoketmon", JSON.stringify(myPokemons));
 

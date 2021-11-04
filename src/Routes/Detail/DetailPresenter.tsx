@@ -7,13 +7,25 @@ import { IDetailPresenter } from "../../types";
 
 const Container = styled.div<{ windowSize: number }>`
   width: 100%;
+  height: 100%;
+  overflow: auto;
   background-color: rgba(20, 20, 20, 0.7);
   margin-top: ${(props) => (props.windowSize > 810 ? "70px" : "0px")};
-  height: ${(props) => (props.windowSize > 810 ? "90%" : "180%")};
+  /* height: ${(props) => (props.windowSize > 810 ? "90%" : "180%")}; */
   display: grid;
   //grid-template-rows:0.5fr 0.5fr 1fr;
+  grid-template-areas: ${(props) =>
+    props.windowSize > 810
+      ? `
+    "img img info" 
+    "evolve evolve evolve"
+    `
+      : `"img" 
+     "info" 
+     "evolve"  `};
   grid-template-columns: ${(props) =>
-    props.windowSize > 810 ? "0.4fr 0.5fr 1.5fr" : ""};
+    props.windowSize > 810 ? "0.5fr 1fr " : ""};
+
   grid-template-rows: ${(props) =>
     props.windowSize <= 810 ? "0.4fr 0.5fr 1fr" : ""};
   padding: 20px 10px;
@@ -28,10 +40,9 @@ const ImgWrapper = styled.div<{ windowSize: number }>`
   }
 
   display: grid;
-  grid-template-rows: ${(props) =>
-    props.windowSize > 810 ? "repeat(5,110px)" : ""};
+  grid-area: img;
   grid-template-columns: ${(props) =>
-    props.windowSize <= 810 ? "repeat(5,110px)" : ""};
+    props.windowSize > 810 ? "repeat(5,1fr)" : "repeat(5,80px)"};
   align-items: center;
   justify-items: center;
   padding: 20px;
@@ -43,6 +54,7 @@ const InfoBox = styled.ul<{ windowSize: number }>`
   gap: 5px;
 
   display: grid;
+  grid-area: info;
   grid-template-rows: ${(props) =>
     props.windowSize > 810 ? "repeat(9,50px)" : "repeat(9,50px)"};
   grid-template-columns: ${(props) =>
@@ -79,7 +91,10 @@ const InfoBox = styled.ul<{ windowSize: number }>`
 
 const EvolveBox = styled.div<{ windowSize: number }>`
   margin-top: 20px;
+  width: 100%;
   display: grid;
+  grid-area: evolve;
+
   grid-template-rows: 50px 50px 1fr 1fr;
   h1 {
     font-weight: 700;
@@ -128,7 +143,7 @@ const CommonTitle = styled.div<{ common: number }>`
 `;
 
 const CommonBox = styled.div<{ common: number; windowSize: number }>`
-  // border: 1px solid white;
+  height: 200px;
   display: grid;
   grid-template-columns: ${(props) =>
     props.common ? `repeat(${props.common + 4},minmax(120px,1fr))` : ""};
@@ -266,11 +281,11 @@ const DetailPresenter: React.FC<IDetailPresenter> = ({
       {windowSize > 810 ? <LongMenu></LongMenu> : <Menu></Menu>}
       <Container windowSize={windowSize}>
         <ImgWrapper windowSize={windowSize}>
-          <img src={nowCommonUrl} alt={"detail"} />
-          <img src={urlSearch.commonBackUrl(smallName)} alt={"detail"} />
-          <img src={pokemon.pokeGif} alt={"detail"} />
-          <img src={nowShinyUrl} alt={"detail"} />
-          <img src={urlSearch.shinyBackUrl(smallName)} alt={"detail"} />
+          <img src={nowCommonUrl} />
+          <img src={urlSearch.commonBackUrl(smallName)} />
+          <img src={pokemon.pokeGif} />
+          <img src={nowShinyUrl} />
+          <img src={urlSearch.shinyBackUrl(smallName)} />
         </ImgWrapper>
         <InfoBox windowSize={windowSize}>
           <li>
@@ -333,20 +348,12 @@ const DetailPresenter: React.FC<IDetailPresenter> = ({
 
           <CommonBox windowSize={windowSize} common={commonLength}>
             {commonEvolveUrl.map((item) =>
-              item !== undefined ? (
-                <img src={item} alt={"detail"} />
-              ) : (
-                <img alt="empty"></img>
-              )
+              item !== undefined ? <img src={item} /> : <img alt="empty"></img>
             )}
           </CommonBox>
           <CommonBox windowSize={windowSize} common={commonLength}>
             {shinyEvolveUrl.map((item) =>
-              item !== undefined ? (
-                <img src={item} alt={"detail"} />
-              ) : (
-                <img alt="empty"></img>
-              )
+              item !== undefined ? <img src={item} /> : <img alt="empty"></img>
             )}
           </CommonBox>
         </EvolveBox>
