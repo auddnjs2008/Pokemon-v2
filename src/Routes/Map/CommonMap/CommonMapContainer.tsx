@@ -282,18 +282,20 @@ const CommonMapContainer = () => {
 
   useEffect(() => {
     const mapKey = window.location.href.split(":")[3];
-    const pokemon = Pokemon.pokemon.filter((item) => {
-      for (let i = 0; i < monsterTypes[mapKey].length; i++) {
-        if (
-          item.type.includes(monsterTypes[mapKey][i]) &&
-          (item.prev_evolution ? item.prev_evolution.length !== 2 : 1)
-        ) {
-          return true;
+    if (mapKey) {
+      const pokemon = Pokemon.pokemon.filter((item) => {
+        for (let i = 0; i < monsterTypes[mapKey].length; i++) {
+          if (
+            item.type.includes(monsterTypes[mapKey][i]) &&
+            (item.prev_evolution ? item.prev_evolution.length !== 2 : 1)
+          ) {
+            return true;
+          }
         }
-      }
-      return false;
-    });
-    setPokemon(pokemon);
+        return false;
+      });
+      setPokemon(pokemon);
+    }
   }, []);
 
   useEffect(() => {
