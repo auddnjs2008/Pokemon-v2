@@ -1,11 +1,16 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { FC, useCallback, useEffect, useRef, useState } from "react";
 import CommonMapPresenter from "./CommonMapPresenter";
 import Pokemon from "pokemon-go-pokedex";
 import { Egg, IPokemon } from "../../../types";
 import { MapImage } from "../../../lib/imagesUrl";
 import monsterTypes from "../../../lib/MonsterType";
+import { RouteComponentProps } from "react-router";
 
-const CommonMapContainer = () => {
+interface ICommonMapContainer {
+  history: RouteComponentProps;
+}
+
+const CommonMapContainer: FC<ICommonMapContainer> = ({ history }) => {
   const newMap = [
     [1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1],
     [1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1],
@@ -281,21 +286,20 @@ const CommonMapContainer = () => {
   }, [pokemon]);
 
   useEffect(() => {
-    const mapKey = window.location.href.split(":")[3];
-    if (mapKey) {
-      const pokemon = Pokemon.pokemon.filter((item) => {
-        for (let i = 0; i < monsterTypes[mapKey].length; i++) {
-          if (
-            item.type.includes(monsterTypes[mapKey][i]) &&
-            (item.prev_evolution ? item.prev_evolution.length !== 2 : 1)
-          ) {
-            return true;
-          }
+    const mapKey = history.location.pathname.split(":")[1];
+
+    const pokemon = Pokemon.pokemon.filter((item) => {
+      for (let i = 0; i < monsterTypes[mapKey].length; i++) {
+        if (
+          item.type.includes(monsterTypes[mapKey][i]) &&
+          (item.prev_evolution ? item.prev_evolution.length !== 2 : 1)
+        ) {
+          return true;
         }
-        return false;
-      });
-      setPokemon(pokemon);
-    }
+      }
+      return false;
+    });
+    setPokemon(pokemon);
   }, []);
 
   useEffect(() => {
