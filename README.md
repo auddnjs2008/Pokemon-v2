@@ -1,14 +1,18 @@
-# Pocketmon
-Pocketmon website
+# PocketMon Web Game
 
-
-#1. 들어가면 보이는 화면  
- 처음 들어가게 되면 당신의 포켓몬 한마리가 랜덤으로 배정이 됩니다. 
+ ![image](https://user-images.githubusercontent.com/46766443/143855804-2b4f563f-986b-4bfc-b33b-1b3189c02309.png)
+ 처음 화면으로 들어갈 때  랜덤으로 포켓몬을 배정받습니다. 
+ 내 포켓몬들은 localStorage myPokemon에 저장이 됩니다. 
  
 # Encyclopedia page
-  1세대의 포켓몬 정보들을 확인 할 수 있습니다.  각 포켓몬의 정보와 진화과정을 보실 수 있습니다.
+![image](https://user-images.githubusercontent.com/46766443/143856127-368bc746-91ea-43e4-9b4b-8c255ec78e6a.png)
+
+1세대의 포켓몬 정보들을 확인 할 수 있습니다.  포켓못을 클릭시 각 진화과정과 정보를 볼 수 있습니다.
 
 # Store Page
+
+![image](https://user-images.githubusercontent.com/46766443/143856392-4d52da63-63c1-462f-9417-f3d3038e1c5f.png)
+
   현재 가지고 있는 돈으로  아이템들을 살 수 있습니다.  
   1.포켓볼(3종류) - 게임 맵에서 포켓몬들을 잡을 수 있습니다. 물론 비싼 포켓볼 일 수록  더 쉽게 잡힙니다. 
   2.포션(3종류) -  배틀중 잃은 체력을 My Bag Page에서  포션을 사용해  치료해 줄수 있습니다.
@@ -24,28 +28,42 @@ Pocketmon website
   
  
  # MyPoketmon Page
-   현재 내가 가지고 있는 포켓몬들을 확인 할 수 있습니다.  change off button과 clear button이 있는데   change off button을 클릭해  change on button으로 바꾼후  포켓몬을 클릭하면
-   배틀 포켓몬으로 설정 하실 수 있습니다.  chage off 상태에서 포켓몬을 누를경우 상세 페이지로 넘어갑니다.  clear button은 셋팅된 배틀 포켓몬 3마리를 초기화 시킵니다.
-   게임 맵에서 전투를 하기 위해선 무조건!!! 이 배틀 포켓몬이 한마리라도 셋팅이 되 있어야 합니다.
+ 
+ ![image](https://user-images.githubusercontent.com/46766443/143856550-dfbf57b9-78fa-4eda-8cc1-0cb1bd0f9539.png)
+
+   현재 내가 가지고 있는 포켓몬들을 확인 할 수 있습니다.  
+   change off button과 clear button이 있는데   change off button을 클릭해  change on button으로 바꾼후  포켓몬을 클릭하면
+   배틀 포켓몬으로 설정 하실 수 있습니다.  chage off 상태에서 포켓몬을 누를경우 상세 페이지로 넘어갑니다.  
+   clear button은 셋팅된 배틀 포켓몬 3마리를 초기화 시킵니다.
+   게임 맵에서 전투를 하기 위해선 무조건!!! 이 배틀 포켓몬이 한마리라도 셋팅이 되어 있어야 합니다.
  
  # My Bag  Page
-   현재 내가  가지고 있는 아이템들을  확인 할 수 있고 사용 할 수 있습니다. (물약, 캔디, 알) 
+
+![image](https://user-images.githubusercontent.com/46766443/143856700-5b84c9e5-a21a-432f-bfe6-9e3769322dac.png)
+   
+현재 내가  가지고 있는 아이템들을  확인 할 수 있고 사용 할 수 있습니다. (물약, 캔디, 알) 
    
  # Game Page
+ 
+ ![image](https://user-images.githubusercontent.com/46766443/143856793-360b2409-c151-4201-9fbf-a259ccd0b328.png)
+
    이 페이지를 들어가면  여러 원표시가 있는데  이는 배틀지역이라는 뜻입니다. 일반 연한 빨강생 부분은  일반 사냥터이고   
    노랑, 진한빨강, 하늘색 구역은  전설의 포켓몬 3마리가 존재합니다.
-   그리고 마지막으로 진한 남색 구역은  제일 강한 포켓몬 뮤츠가 존재합니다.  
-   ** 게임방식**
-    맵을 마우스로 클릭하고 들어가면  키보드 방향키로  캐릭터를 움직 일 수 있습니다.  그리고 야생 포켓몬과 근처에 가게 되면  배틀 표시가 뜨면서 배틀이 이루어집니다.
+   그리고 마지막으로 진한 남색 구역은  제일 강한 포켓몬 뮤츠가 존재합니다.
+   
+ # 게임방식
+    맵을 마우스로 클릭하고 들어가면  키보드 방향키로  캐릭터를 움직 일 수 있습니다.  
+    그리고 야생 포켓몬과 근처에 가게 되면  배틀 표시가 뜨면서 배틀이 이루어집니다.
     포켓볼로 잡을 수도 있고   배틀 포켓몬을 쓰러트릴 경우   일정의 포켓코인을 얻을 수 있습니다. 이는  모든 맵에 적용되는 규칙입니다.
     이 게임은 CP와  캐릭터별 타입으로 상성 계산을 하여  데미지를 계산하였습니다.  
  
- #Docs Page
+ # Docs Page
     이 사이트의 정보와 저작권 등을 표시해 놓았으며 무한 슬라이더로 구현해 보았습니다.    
  
- 웹사이트 링크 
- https://admiring-shockley-9428b5.netlify.app/#/
-   
+ # 웹사이트 링크 
+https://peaceful-beaver-b62624.netlify.app/
+ 
+ 
    
     
  
